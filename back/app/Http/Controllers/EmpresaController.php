@@ -25,4 +25,29 @@ class EmpresaController extends Controller
 
         return response()->json(['success' => 'Salvo com sucesso'], 200);
     }
+
+    public function getEmpresa() {
+        $array = ['error' => ''];
+
+        $empresas = Empresa::all();
+
+    $array['empresa'] = $empresas;
+
+    return $array;
+    }
+
+    public function getUfEmpresa(Request $request) {
+
+        $array = ['error' => ''];
+        
+        $empresa = $request->input('empresa');
+
+        $Ufempresa = Empresa::where('id', $empresa)->first();
+
+        $uf = $Ufempresa->uf;
+
+        $array['Ufempresa'] = $uf;
+
+    return $array;
+    }
 }

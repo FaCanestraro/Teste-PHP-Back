@@ -14,7 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/select-empresa', 'App\Http\Controllers\EmpresaController@getEmpresa');
+Route::post('/select-uf-empresa', 'App\Http\Controllers\EmpresaController@getUfEmpresa');
 Route::post('/empresa/add', 'App\Http\Controllers\EmpresaController@addEmpresa');
+
+
 Route::post('/cliente-fisica/add', 'App\Http\Controllers\ClienteController@addClienteFisico');
 Route::post('/cliente-juridica/add', 'App\Http\Controllers\ClienteController@addClienteFisico');
 

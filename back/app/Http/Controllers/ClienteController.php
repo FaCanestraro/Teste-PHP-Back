@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Cliente;
+use App\Models\Empresa;
 
 
 class ClienteController extends Controller
@@ -24,26 +25,19 @@ class ClienteController extends Controller
         $numero = $request->input('numero');
         $cep = $request->input('cep');
 
-        // Irei pegar o ano do $currentDate - o ano do $nascimento fornecido pelo cliente
-        // $idade = $currentDate - $nascimento;
-
-        // $ufEmpresa = Empresa::where('id', $empresa);
-
-        // if($ufEmpresa->uf == "Paraná" || $ufEmpresa->uf == "PR" && $idade <= 18) {
-        //     return response()->json(['error' => 'Proibido o cadastro de menores de idade paranaenses'], 500);
-        // }
+         $ufEmpresa = Empresa::where('id', $empresa)->first();
 
         $newClienteFisico = new Cliente;
-        $newClienteFisico->nome = $nome;
         $newClienteFisico->empresa_cnpj = $ufEmpresa->cnpj;
+        $newClienteFisico->nome = $nome;
         $newClienteFisico->identidade = $identidade;
+        $newClienteFisico->rg = $rg;
+        $newClienteFisico->nascimento = $nascimento;
         $newClienteFisico->telefone = $telefone;
         $newClienteFisico->email = $email;
         $newClienteFisico->endereco = $endereco;
         $newClienteFisico->numero = $numero;
         $newClienteFisico->cep = $cep;
-        $newClienteFisico->rg = $rg;
-        $newClienteFisico->nascimento = $nascimento;
         $newClienteFisico->created_at = $currentDate;
         $newClienteFisico->save();
 

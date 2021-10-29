@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Empresa extends Model
 {
-    use HasFactory;
+    public $timestamps = false;
+    public $table = 'empresas';
     protected $fillable = [
         'uf',
         'razaoSocial',
