@@ -9,6 +9,18 @@ use App\Models\Empresa;
 
 class ClienteController extends Controller
 {
+
+    public function getClientes() {
+        $array = ['error' => ''];
+
+        $clientes = Cliente::all();
+
+        $array['clientes'] = $clientes;
+
+    return $array;
+    }
+
+
     public function addClienteFisico(Request $request) {
         $array = ['error' => ''];
 
@@ -74,5 +86,60 @@ class ClienteController extends Controller
         $newClienteJuridico->save();
 
         return response()->json(['success' => 'Salvo com sucesso'], 200);
+    }
+
+
+    public function getFiltroClientes(Request $request) {
+        $array = ['error' => ''];
+
+        $nome = $request->input('dropCliente');
+        $created_at = $request->input('created_at');
+        $identidade = $request->input('identidade');
+
+
+        //Filtro completo
+        if($nome != null && $created_at != null && $identidade != null) {
+        $clientes = Cliente::where('nome', $nome)->where('created_at', $created_at)->where('identidade', $identidade)->get();
+        }
+
+        //Filtro vazio
+        else if($nome == null && $created_at == null && $identidade == null) {
+           $clientes = Cliente::all();
+        }
+
+        //Pesquisa só pelo nome
+        else if($nome != null && $created_at == null && $identidade == null) {
+        $clientes = Cliente::where('nome', $nome)->get();
+        }
+
+        //Pesquisa pela identidade e id
+        else if($nome != null && $created_at == null && $identidade != null) {
+        $clientes = Cliente::where('nome', $nome)->where('identidade', $identidade)->get();
+        }
+
+        //Pesquisa pelo created_at e id
+        else if($nome != null && $created_at != null && $identidade == null) {
+        $clientes = Cliente::where('nome', $nome)->where('created_at', $created_at)->get();
+        }
+
+        //Pesquisa só pelo created_at
+        else if($nome == null && $created_at != null && $identidade == null) {
+        $clientes = Cliente::where('created_at', $created_at)->get();
+        }
+
+        //Pesquisa pelo identidade e created_at
+        else if($nome == null && $created_at != null && $identidade != null){
+        $clientes = Cliente::where('created_at', $created_at)->where('identidade', $identidade)->get();
+        }
+
+        //Pesquisa só pela Identidade
+        else if($nome == null && $created_at == null && $identidade != null){
+        $clientes = Cliente::where('identidade', $identidade)->get();
+        }
+
+        $array['clientes'] = $clientes;
+        //$clientes = Cliente::where('nome', $nome)->where('created_at', $created_at)->where('identidade', $identidade)->first();
+
+    return $array;
     }
 }

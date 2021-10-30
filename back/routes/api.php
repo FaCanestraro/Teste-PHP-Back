@@ -21,6 +21,9 @@ Route::post('/empresa/add', 'App\Http\Controllers\EmpresaController@addEmpresa')
 
 Route::post('/cliente-fisica/add', 'App\Http\Controllers\ClienteController@addClienteFisico');
 Route::post('/cliente-juridica/add', 'App\Http\Controllers\ClienteController@addClienteFisico');
+Route::get('clientes', 'App\Http\Controllers\ClienteController@getClientes');
+Route::post('filtro-cliente', 'App\Http\Controllers\ClienteController@getFiltroClientes');
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
